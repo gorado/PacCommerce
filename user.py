@@ -1,0 +1,423 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPH6G0sJ5n5xdumxpOmnKJu",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/gorado/PacCommerce/blob/main/user.py\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# untuk membuat table\n",
+        "from tabulate import tabulate\n",
+        "# square root, untuk menghitung euckudean distance\n",
+        "import math"
+      ],
+      "metadata": {
+        "id": "t77KDPmIKTbE"
+      },
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class User():\n",
+        "    data_membership = {\n",
+        "        'Sumbul': 'Platinum',\n",
+        "        'Ana': 'Gold',\n",
+        "        'Cahya': 'Platinum'\n",
+        "    }\n",
+        "\n",
+        "    data_requirement = [\n",
+        "        {\n",
+        "            \"Membership\": \"Platinum\",\n",
+        "            \"Expense\" : 8,\n",
+        "            \"Income\" : 15\n",
+        "        },\n",
+        "        {\n",
+        "            \"Membership\": \"Gold\",\n",
+        "            \"Expense\" : 6,\n",
+        "            \"Income\" : 10\n",
+        "        },\n",
+        "        {\n",
+        "            \"Membership\": \"Silver\",\n",
+        "            \"Expense\" : 5,\n",
+        "            \"Income\" : 7\n",
+        "        }\n",
+        "    ]\n",
+        "\n",
+        "    data_membership = [\n",
+        "        {\n",
+        "            \"Membership\": \"Platinum\",\n",
+        "            \"Discount\": '15%',\n",
+        "            \"Another Benefit\": \"Benefit Silver + Gold + Voucher Liburan + Cashback max. 30%\"\n",
+        "        },\n",
+        "        {\n",
+        "            \"Membership\": \"Gold\",\n",
+        "            \"Discount\": '10%',\n",
+        "            \"Another Benefit\": \"Benefit Silver + Voucher Ojek Online\"\n",
+        "        },\n",
+        "        {\n",
+        "            \"Membership\": \"Silver\",\n",
+        "            \"Discount\": '8%',\n",
+        "            \"Another Benefit\": \"Voucher Makanan\"\n",
+        "        }\n",
+        "    ]\n",
+        "\n",
+        "    headers_requirement = list(x for x in data_requirement[0].keys())\n",
+        "    content_requirement = list(list(x.values()) for x in data_requirement)\n",
+        "\n",
+        "\n",
+        "    def __init__(self, username, membership = None):\n",
+        "        self.username = username\n",
+        "        self.membership = membership\n",
+        "\n",
+        "\n",
+        "    def show_benefit(self):\n",
+        "        benefit = [\n",
+        "            [\"Platinum\", \"15%\", \"Benefit Gold + Silver + Cashback max. 30%\"],\n",
+        "            [\"Gold\", \"10%\", \"Benefit Silver + Voucher Ojek Online\"],\n",
+        "            [\"Silver\", \"8%\", \"Voucher Makanan\"],\n",
+        "        ]\n",
+        "\n",
+        "        benefit_headers = [\"Membership\", \"Discount\", \"Another Benefit\"]\n",
+        "\n",
+        "        print('Paccommerce Membership Benefit')\n",
+        "        print(tabulate(benefit, benefit_headers, tablefmt='fancy_grid', stralign='center'))\n",
+        "\n",
+        "    def show_requirements(self):\n",
+        "        \"\"\"\n",
+        "        Fungsi ini digunakan untuk mencetak requirement untuk mencapai benefit tier tertentu\n",
+        "\n",
+        "        input: None\n",
+        "        \"\"\"\n",
+        "        print(\"Detail requirement based on membership tier\")\n",
+        "        print(\"\")\n",
+        "        table = tabulate(self.content_requirement, headers=self.headers_requirement,tablefmt='fancy_grid', stralign='center')\n",
+        "        print(table)\n",
+        "\n",
+        "    def predict_membership(self, expense,income):\n",
+        "        \"\"\"\n",
+        "        Fungsi ini bertujuan untuk predict customer membership tier berdasar their income and expense\n",
+        "\n",
+        "        input:\n",
+        "        - username(str)\n",
+        "        - expense(int)\n",
+        "        - income(int)\n",
+        "        \"\"\"\n",
+        "        # self.username = username\n",
+        "        self.income = income\n",
+        "        self.expense = expense\n",
+        "\n",
+        "        r = 0\n",
+        "        final_result = []\n",
+        "        for i in self.__class__.data_requirement:\n",
+        "            expense_threshold = i['Expense']\n",
+        "            income_threshold = i['Income']\n",
+        "            r = ((expense_threshold - self.expense)**2 + (income_threshold - self.income)**2)**0.5\n",
+        "\n",
+        "            result = {i['Membership']: r}\n",
+        "            final_result.append(result)\n",
+        "\n",
+        "        # self.membership = None\n",
+        "\n",
+        "        init_val = 100\n",
+        "        for i in final_result:\n",
+        "            value = list(i.values())[0] # ngambil dari dictionary -- convert ke list (isinya 1 nilai doang) -- kemudian ambil yang ke 0\n",
+        "            key = list(i.keys())[0] # ngambil dari dictionary -- convert ke list (isinya 1 nilai doang) -- kemudian ambil yang ke 0\n",
+        "            if init_val > value:\n",
+        "                self.membership = key\n",
+        "                init_val = value\n",
+        "            else:\n",
+        "                pass\n",
+        "\n",
+        "        return self.membership\n",
+        "\n",
+        "    def calculate_price(self, membership, list_harga_barang):\n",
+        "        # self.membership = membership\n",
+        "        for data in self.__class__.data_membership:\n",
+        "            if data['Membership'] == membership:\n",
+        "                if type(data['Discount']) == str:\n",
+        "                    data['Discount'] = float(data['Discount'].replace(\"%\",\"\")) / 100\n",
+        "                total_harga = sum(list_harga_barang) * (1-data['Discount'])\n",
+        "\n",
+        "        print(total_harga)"
+      ],
+      "metadata": {
+        "id": "X12zuqcJKvrV"
+      },
+      "execution_count": 2,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "fathul = User(\"Fathul\")\n",
+        "arya = User(\"Arya\")"
+      ],
+      "metadata": {
+        "id": "HvGZcpZOMHZB"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "member_fathul = fathul.predict_membership(3, 5)\n",
+        "print(member_fathul)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GdgWW9yRQW5-",
+        "outputId": "1fcccaf3-a614-4a09-9a1e-2ee456ba4974"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Silver\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "arya.show_requirements()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DBhUSOwWR_ds",
+        "outputId": "d2d2124f-c644-463d-a312-8e6f211997a3"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Detail requirement based on membership tier\n",
+            "\n",
+            "╒══════════════╤═══════════╤══════════╕\n",
+            "│  Membership  │   Expense │   Income │\n",
+            "╞══════════════╪═══════════╪══════════╡\n",
+            "│   Platinum   │         8 │       15 │\n",
+            "├──────────────┼───────────┼──────────┤\n",
+            "│     Gold     │         6 │       10 │\n",
+            "├──────────────┼───────────┼──────────┤\n",
+            "│    Silver    │         5 │        7 │\n",
+            "╘══════════════╧═══════════╧══════════╛\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "fathul.calculate_price(member_fathul, [10, 5, 3, 9, 10])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-keM2HYXTzYC",
+        "outputId": "aaf2690c-6946-45ec-e6b5-dfad4d426e46"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "34.04\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "fathul.data_membership"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "KDzzECsmyxuw",
+        "outputId": "83a361a0-583d-45ec-e9cf-127ef4214043"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[{'Membership': 'Platinum',\n",
+              "  'Discount': '15%',\n",
+              "  'Another Benefit': 'Benefit Silver + Gold + Voucher Liburan + Cashback max. 30%'},\n",
+              " {'Membership': 'Gold',\n",
+              "  'Discount': '10%',\n",
+              "  'Another Benefit': 'Benefit Silver + Voucher Ojek Online'},\n",
+              " {'Membership': 'Silver',\n",
+              "  'Discount': 0.08,\n",
+              "  'Another Benefit': 'Voucher Makanan'}]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "arya.data_membership"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3WDsv9cjzCIJ",
+        "outputId": "0aef9925-d292-405c-c49b-80f3751114b8"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[{'Membership': 'Platinum',\n",
+              "  'Discount': '15%',\n",
+              "  'Another Benefit': 'Benefit Silver + Gold + Voucher Liburan + Cashback max. 30%'},\n",
+              " {'Membership': 'Gold',\n",
+              "  'Discount': '10%',\n",
+              "  'Another Benefit': 'Benefit Silver + Voucher Ojek Online'},\n",
+              " {'Membership': 'Silver',\n",
+              "  'Discount': 0.08,\n",
+              "  'Another Benefit': 'Voucher Makanan'}]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(f\"Username : {fathul.username}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "TYlaik5UzDz4",
+        "outputId": "c6f86959-4dbb-4ac2-8119-495c826e5a7a"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Username : Fathul\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "fathul.show_benefit()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "A0SG6dBJzOJv",
+        "outputId": "42133fc8-fae9-412b-e687-966763278789"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Paccommerce Membership Benefit\n",
+            "╒══════════════╤════════════╤═══════════════════════════════════════════╕\n",
+            "│  Membership  │  Discount  │              Another Benefit              │\n",
+            "╞══════════════╪════════════╪═══════════════════════════════════════════╡\n",
+            "│   Platinum   │    15%     │ Benefit Gold + Silver + Cashback max. 30% │\n",
+            "├──────────────┼────────────┼───────────────────────────────────────────┤\n",
+            "│     Gold     │    10%     │   Benefit Silver + Voucher Ojek Online    │\n",
+            "├──────────────┼────────────┼───────────────────────────────────────────┤\n",
+            "│    Silver    │     8%     │              Voucher Makanan              │\n",
+            "╘══════════════╧════════════╧═══════════════════════════════════════════╛\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "arya.show_requirements()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "FIxcj39N2hsz",
+        "outputId": "63e2a542-0c74-439a-b571-0aab86eeec19"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Detail requirement based on membership tier\n",
+            "\n",
+            "╒══════════════╤═══════════╤══════════╕\n",
+            "│  Membership  │   Expense │   Income │\n",
+            "╞══════════════╪═══════════╪══════════╡\n",
+            "│   Platinum   │         8 │       15 │\n",
+            "├──────────────┼───────────┼──────────┤\n",
+            "│     Gold     │         6 │       10 │\n",
+            "├──────────────┼───────────┼──────────┤\n",
+            "│    Silver    │         5 │        7 │\n",
+            "╘══════════════╧═══════════╧══════════╛\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
