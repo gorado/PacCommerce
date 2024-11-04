@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyPH6G0sJ5n5xdumxpOmnKJu",
+      "authorship_tag": "ABX9TyN8v6rKVEgXzMQZym3uS4N0",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -32,17 +32,8 @@
         "# untuk membuat table\n",
         "from tabulate import tabulate\n",
         "# square root, untuk menghitung euckudean distance\n",
-        "import math"
-      ],
-      "metadata": {
-        "id": "t77KDPmIKTbE"
-      },
-      "execution_count": 1,
-      "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "source": [
+        "import math\n",
+        "\n",
         "class User():\n",
         "    data_membership = {\n",
         "        'Sumbul': 'Platinum',\n",
@@ -168,256 +159,17 @@
       "metadata": {
         "id": "X12zuqcJKvrV"
       },
-      "execution_count": 2,
+      "execution_count": 12,
       "outputs": []
     },
     {
       "cell_type": "code",
-      "source": [
-        "fathul = User(\"Fathul\")\n",
-        "arya = User(\"Arya\")"
-      ],
+      "source": [],
       "metadata": {
-        "id": "HvGZcpZOMHZB"
+        "id": "cc3F-MqOB1Jc"
       },
-      "execution_count": 3,
+      "execution_count": null,
       "outputs": []
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "member_fathul = fathul.predict_membership(3, 5)\n",
-        "print(member_fathul)"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "GdgWW9yRQW5-",
-        "outputId": "1fcccaf3-a614-4a09-9a1e-2ee456ba4974"
-      },
-      "execution_count": 4,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Silver\n"
-          ]
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "arya.show_requirements()"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "DBhUSOwWR_ds",
-        "outputId": "d2d2124f-c644-463d-a312-8e6f211997a3"
-      },
-      "execution_count": 5,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Detail requirement based on membership tier\n",
-            "\n",
-            "╒══════════════╤═══════════╤══════════╕\n",
-            "│  Membership  │   Expense │   Income │\n",
-            "╞══════════════╪═══════════╪══════════╡\n",
-            "│   Platinum   │         8 │       15 │\n",
-            "├──────────────┼───────────┼──────────┤\n",
-            "│     Gold     │         6 │       10 │\n",
-            "├──────────────┼───────────┼──────────┤\n",
-            "│    Silver    │         5 │        7 │\n",
-            "╘══════════════╧═══════════╧══════════╛\n"
-          ]
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "fathul.calculate_price(member_fathul, [10, 5, 3, 9, 10])"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "-keM2HYXTzYC",
-        "outputId": "aaf2690c-6946-45ec-e6b5-dfad4d426e46"
-      },
-      "execution_count": 6,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "34.04\n"
-          ]
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "fathul.data_membership"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "KDzzECsmyxuw",
-        "outputId": "83a361a0-583d-45ec-e9cf-127ef4214043"
-      },
-      "execution_count": 7,
-      "outputs": [
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": [
-              "[{'Membership': 'Platinum',\n",
-              "  'Discount': '15%',\n",
-              "  'Another Benefit': 'Benefit Silver + Gold + Voucher Liburan + Cashback max. 30%'},\n",
-              " {'Membership': 'Gold',\n",
-              "  'Discount': '10%',\n",
-              "  'Another Benefit': 'Benefit Silver + Voucher Ojek Online'},\n",
-              " {'Membership': 'Silver',\n",
-              "  'Discount': 0.08,\n",
-              "  'Another Benefit': 'Voucher Makanan'}]"
-            ]
-          },
-          "metadata": {},
-          "execution_count": 7
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "arya.data_membership"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "3WDsv9cjzCIJ",
-        "outputId": "0aef9925-d292-405c-c49b-80f3751114b8"
-      },
-      "execution_count": 8,
-      "outputs": [
-        {
-          "output_type": "execute_result",
-          "data": {
-            "text/plain": [
-              "[{'Membership': 'Platinum',\n",
-              "  'Discount': '15%',\n",
-              "  'Another Benefit': 'Benefit Silver + Gold + Voucher Liburan + Cashback max. 30%'},\n",
-              " {'Membership': 'Gold',\n",
-              "  'Discount': '10%',\n",
-              "  'Another Benefit': 'Benefit Silver + Voucher Ojek Online'},\n",
-              " {'Membership': 'Silver',\n",
-              "  'Discount': 0.08,\n",
-              "  'Another Benefit': 'Voucher Makanan'}]"
-            ]
-          },
-          "metadata": {},
-          "execution_count": 8
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "print(f\"Username : {fathul.username}\")"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "TYlaik5UzDz4",
-        "outputId": "c6f86959-4dbb-4ac2-8119-495c826e5a7a"
-      },
-      "execution_count": 9,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Username : Fathul\n"
-          ]
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "fathul.show_benefit()"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "A0SG6dBJzOJv",
-        "outputId": "42133fc8-fae9-412b-e687-966763278789"
-      },
-      "execution_count": 10,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Paccommerce Membership Benefit\n",
-            "╒══════════════╤════════════╤═══════════════════════════════════════════╕\n",
-            "│  Membership  │  Discount  │              Another Benefit              │\n",
-            "╞══════════════╪════════════╪═══════════════════════════════════════════╡\n",
-            "│   Platinum   │    15%     │ Benefit Gold + Silver + Cashback max. 30% │\n",
-            "├──────────────┼────────────┼───────────────────────────────────────────┤\n",
-            "│     Gold     │    10%     │   Benefit Silver + Voucher Ojek Online    │\n",
-            "├──────────────┼────────────┼───────────────────────────────────────────┤\n",
-            "│    Silver    │     8%     │              Voucher Makanan              │\n",
-            "╘══════════════╧════════════╧═══════════════════════════════════════════╛\n"
-          ]
-        }
-      ]
-    },
-    {
-      "cell_type": "code",
-      "source": [
-        "arya.show_requirements()"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "FIxcj39N2hsz",
-        "outputId": "63e2a542-0c74-439a-b571-0aab86eeec19"
-      },
-      "execution_count": 11,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Detail requirement based on membership tier\n",
-            "\n",
-            "╒══════════════╤═══════════╤══════════╕\n",
-            "│  Membership  │   Expense │   Income │\n",
-            "╞══════════════╪═══════════╪══════════╡\n",
-            "│   Platinum   │         8 │       15 │\n",
-            "├──────────────┼───────────┼──────────┤\n",
-            "│     Gold     │         6 │       10 │\n",
-            "├──────────────┼───────────┼──────────┤\n",
-            "│    Silver    │         5 │        7 │\n",
-            "╘══════════════╧═══════════╧══════════╛\n"
-          ]
-        }
-      ]
     }
   ]
 }
